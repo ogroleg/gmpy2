@@ -659,6 +659,7 @@ GMPy_MPZ_popcount(PyObject *self, PyObject *args)
             Py_DECREF();
             //PyObject *dist = PyLong_FromLong(1);
             PyObject* test = PyDict_GetItem(q, dist);
+            long test2;
             if(test==NULL){test2=0;} else{test2=PyLong_AsLong(test); Py_DECREF(test);}
             PyDict_SetItem(q, dist, PyLong_FromLong(test2+1));
             Py_DECREF(dist);
