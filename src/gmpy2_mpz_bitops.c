@@ -646,6 +646,7 @@ GMPy_MPZ_popcount(PyObject *self, PyObject *args)
 {
     PyObject *q = PyDict_New();
     int pr_length = PyObject_Length(args);
+    return PyLong_FromLong(pr_length);
     for (int index = 0; index < pr_length; index++) {
         PyObject *item;
         item = PyList_GetItem(args, index);
