@@ -645,7 +645,7 @@ static PyObject *
 GMPy_MPZ_popcount(PyObject *self, PyObject *args)
 {
     PyObject *q = PyDict_New();
-    pr_length = PyObject_Length(args);
+    int pr_length = PyObject_Length(args);
     for (int index = 0; index < pr_length; index++) {
         PyObject *item;
         item = PyList_GetItem(args, index);
@@ -653,11 +653,11 @@ GMPy_MPZ_popcount(PyObject *self, PyObject *args)
             PyObject *item2;
             item2 = PyList_GetItem(args, index2);
             
-            PyTuple *w = PyTuple_Pack(2, item, item2);
+            PyObject *w = PyTuple_Pack(2, item, item2);
             PyObject *dist = GMPy_MPZ_hamdist(self, w);
             
             long test = PyLong_AsLong(PyDict_GetItem(q, dist));
-            PyDictSetItem(q, dist, PyLong_FromLong(test));
+            PyDict_SetItem(q, dist, PyLong_FromLong(test));
         }
     }
     return q;
