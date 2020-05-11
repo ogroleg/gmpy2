@@ -653,7 +653,7 @@ GMPy_MPZ_popcount(PyObject *self, PyObject *args)
             PyObject *item2;
             item2 = PyList_GetItem(args, index2);
             
-            PyTuple *w = PyTuple_Pack(2, item1, item2);
+            PyTuple *w = PyTuple_Pack(2, item, item2);
             PyObject *dist = GMPy_MPZ_hamdist(self, w);
             
             long test = PyLong_AsLong(PyDict_GetItem(q, dist));
