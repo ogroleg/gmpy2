@@ -642,23 +642,25 @@ PyDoc_STRVAR(doc_popcount,
 "1-bits is infinite so -1 is returned in that case.");
 
 static PyObject *
-GMPy_MPZ_popcount(PyObject *self, PyObject *other)
+GMPy_MPZ_popcount(PyObject *self, PyObject *args)
 {
-    mp_bitcnt_t n;
-    MPZ_Object *tempx;
-
-    if ((tempx = GMPy_MPZ_From_Integer(other, NULL))) {
-        n = mpz_popcount(tempx->z);
-        Py_DECREF((PyObject*)tempx);
-        if (n == (mp_bitcnt_t)(-1))
-            return PyLong_FromLong(-1);
-        else
-            return PyIntOrLong_FromMpBitCnt(n);
+    PyObject *q = PyDict_New();
+    pr_length = PyObject_Length(args);
+    for (int index = 0; index < pr_length; index++) {
+        PyObject *item;
+        item = PyList_GetItem(args, index);
+        for (int index2 = 0; index2 < index; index++) {
+            PyObject *item2;
+            item2 = PyList_GetItem(args, index2);
+            
+            PyTuple *w = PyTuple_Pack(2, item1, item2);
+            PyObject *dist = GMPy_MPZ_hamdist(self, w);
+            
+            long test = PyLong_AsLong(PyDict_GetItem(q, dist));
+            PyDictSetItem(q, dist, PyLong_FromLong(test));
+        }
     }
-    else {
-        TYPE_ERROR("popcount() requires 'mpz' argument");
-        return NULL;
-    }
+    return q;
 }
 
 PyDoc_STRVAR(doc_hamdist,
